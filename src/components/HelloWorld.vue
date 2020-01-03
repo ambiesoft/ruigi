@@ -1,6 +1,8 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p>{{ getWord() }}</p>
+
     <p>
       For a guide and recipes on how to configure / customize this project,<br>
       check out the
@@ -31,10 +33,35 @@
 </template>
 
 <script>
+import WNdb from 'wndb-with-exceptions'
+import WordNet from 'node-wordnet'
+// const WNdb = require('wndb-with-exceptions');
+
+var wordnet = new WordNet()
+console.log(WNdb)
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  methods:{
+    getWord()
+    {
+      let ret;
+      wordnet.lookup('node', function(results) {
+        results.forEach(function(result) {
+        //  console.log('------------------------------------');
+        //  console.log(result.synsetOffset);
+        //  console.log(result.pos);
+        //  console.log(result.lemma);
+        //  console.log(result.synonyms);
+        //  console.log(result.pos);
+        ret += (result.gloss);
+        });
+      });
+      return ret
+    }
   }
 }
 </script>
